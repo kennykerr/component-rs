@@ -1,0 +1,8 @@
+namespace Component
+{
+    runtimeclass Class
+    {
+        Class();
+        Int32 Property;
+    }
+}

@@ -36,7 +36,7 @@ fn main() {
         ..Default::default()
     };
 
-    let mut bindings = File::create("src/component.rs").unwrap();
+    let mut bindings = File::create("src/bindings.rs").unwrap();
     bindings.write_all(gen_namespace(&gen).as_bytes()).unwrap();
 
     bindings
@@ -46,7 +46,7 @@ fn main() {
     drop(bindings);
 
     Command::new("rustfmt")
-        .arg("src/component.rs")
+        .arg("src/bindings.rs")
         .status()
         .unwrap();
 }

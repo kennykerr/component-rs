@@ -10,7 +10,7 @@
 pub struct Class(::windows::core::IUnknown);
 impl Class {
     pub fn new() -> ::windows::core::Result<Self> {
-        Self::IActivationFactory(|f| f.activate_instance::<Self>())
+        Self::IActivationFactory(|f| f.ActivateInstance::<Self>())
     }
     fn IActivationFactory<
         R,
@@ -143,9 +143,7 @@ pub struct IClass_Vtbl {
 }
 pub trait IClass_Impl: Sized {
     fn Property(&self) -> ::windows::core::Result<i32>;
-    fn SetProperty(&self, value: i32) -> ::windows::core::Result<()> {
-        ::core::result::Result::Ok(())
-    }
+    fn SetProperty(&self, value: i32) -> ::windows::core::Result<()>;
 }
 impl ::windows::core::RuntimeName for IClass {
     const NAME: &'static str = "Component.IClass";

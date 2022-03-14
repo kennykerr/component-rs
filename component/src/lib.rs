@@ -30,9 +30,10 @@ impl IActivationFactory_Impl for ClassFactory {
 
 #[no_mangle]
 unsafe extern "stdcall" fn DllGetActivationFactory(
-    name: ManuallyDrop<HSTRING>,
+    _name: ManuallyDrop<HSTRING>,
     result: *mut *mut std::ffi::c_void,
 ) -> HRESULT {
+    // TODO: check class name
     let factory: IActivationFactory = ClassFactory().into();
     *result = transmute(factory);
     S_OK

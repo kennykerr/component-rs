@@ -23,7 +23,7 @@ fn main() {
         .unwrap();
 
     if !status.success() {
-        panic!("midlrt failed");
+        panic!();
     }
 
     // TODO: should be able to pass this directly to `bindgen`

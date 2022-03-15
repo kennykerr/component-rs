@@ -8,11 +8,11 @@ use windows::Win32::Foundation::*;
 struct Class(RwLock<i32>);
 
 impl bindings::IClass_Impl for Class {
-    fn Property(&self) -> ::windows::core::Result<i32> {
+    fn Property(&self) -> Result<i32> {
         let reader = self.0.read().unwrap();
         Ok(*reader)
     }
-    fn SetProperty(&self, value: i32) -> ::windows::core::Result<()> {
+    fn SetProperty(&self, value: i32) -> Result<()> {
         let mut writer = self.0.write().unwrap();
         *writer = value;
         Ok(())

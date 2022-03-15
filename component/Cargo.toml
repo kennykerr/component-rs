@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies.windows]
 #version = "0.33"
-path = "/git/windows-rs/crates/libs/windows"
+git = "https://github.com/microsoft/windows-rs"
 features = [
     "implement",
     "Win32_Foundation",
@@ -13,7 +13,7 @@ features = [
 
 [build-dependencies.windows-bindgen]
 #version = "0.33.0"
-path = "/git/windows-rs/crates/libs/bindgen"
+git = "https://github.com/microsoft/windows-rs"
 
 [lib]
 crate-type = ["cdylib"]

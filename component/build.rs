@@ -28,6 +28,7 @@ fn main() {
 
     // TODO: should be able to pass this directly to `bindgen`
     // https://github.com/microsoft/windows-rs/issues/1406
+    std::fs::create_dir_all(".windows/winmd").unwrap();
     copy("component.winmd", ".windows/winmd/component.winmd").unwrap();
 
     let gen = Gen {

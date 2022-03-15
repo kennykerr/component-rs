@@ -8,3 +8,4 @@ bin
 *.user
 *.filters
 Debug
+*.winmd

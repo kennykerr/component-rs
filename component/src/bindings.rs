@@ -1,10 +1,3 @@
-#![allow(
-    non_snake_case,
-    non_camel_case_types,
-    non_upper_case_globals,
-    clashing_extern_declarations,
-    clippy::all
-)]
 #[repr(transparent)]
 pub struct Class(::windows::core::IUnknown);
 impl Class {
@@ -13,14 +6,12 @@ impl Class {
     }
     fn IActivationFactory<
         R,
-        F: FnOnce(&::windows::core::IActivationFactory) -> ::windows::core::Result<R>,
+        F: FnOnce(&::windows::core::IGenericFactory) -> ::windows::core::Result<R>,
     >(
         callback: F,
     ) -> ::windows::core::Result<R> {
-        static mut SHARED: ::windows::core::FactoryCache<
-            Class,
-            ::windows::core::IActivationFactory,
-        > = ::windows::core::FactoryCache::new();
+        static mut SHARED: ::windows::core::FactoryCache<Class, ::windows::core::IGenericFactory> =
+            ::windows::core::FactoryCache::new();
         unsafe { SHARED.call(callback) }
     }
     pub fn Property(&self) -> ::windows::core::Result<i32> {
@@ -130,7 +121,7 @@ unsafe impl ::windows::core::Interface for IClass {
 #[repr(C)]
 #[doc(hidden)]
 pub struct IClass_Vtbl {
-    pub base: ::windows::core::IInspectableVtbl,
+    pub base__: ::windows::core::IInspectableVtbl,
     pub Property: unsafe extern "system" fn(
         this: *mut ::core::ffi::c_void,
         result__: *mut i32,
@@ -185,7 +176,7 @@ impl IClass_Vtbl {
             (*this).SetProperty(value).into()
         }
         Self {
-            base: ::windows::core::IInspectableVtbl::new::<Identity, IClass, OFFSET>(),
+            base__: ::windows::core::IInspectableVtbl::new::<Identity, IClass, OFFSET>(),
             Property: Property::<Identity, Impl, OFFSET>,
             SetProperty: SetProperty::<Identity, Impl, OFFSET>,
         }

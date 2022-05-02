@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netframework", "netframework.csproj", "{A1377E33-6F3F-4C46-82C3-7189BD8BCBFB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1377E33-6F3F-4C46-82C3-7189BD8BCBFB}.Debug|x64.ActiveCfg = Debug|x64
+		{A1377E33-6F3F-4C46-82C3-7189BD8BCBFB}.Debug|x64.Build.0 = Debug|x64
+		{A1377E33-6F3F-4C46-82C3-7189BD8BCBFB}.Release|x64.ActiveCfg = Release|x64
+		{A1377E33-6F3F-4C46-82C3-7189BD8BCBFB}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F197A9AF-C2C4-4050-8979-0FFCBB3A244F}
+	EndGlobalSection
+EndGlobal

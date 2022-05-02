@@ -12,7 +12,7 @@
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.3" />
     </ItemGroup>
     <ItemGroup>
-        <None Update="../component/component.dll">
+        <None Include="../component/component.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

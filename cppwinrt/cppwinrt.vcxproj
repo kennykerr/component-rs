@@ -81,7 +81,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy ..\component\target\debug\component.dll $(OutputPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy ..\component\component.dll $(OutputPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy ..\component\target\debug\component.dll $(OutputPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy ..\component\component.dll $(OutputPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -106,10 +106,10 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy ..\component\target\debug\component.dll $(OutputPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy ..\component\component.dll $(OutputPath)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy ..\component\target\debug\component.dll $(OutputPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">copy ..\component\component.dll $(OutputPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

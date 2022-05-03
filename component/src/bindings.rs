@@ -47,6 +47,21 @@ impl Class {
             .from_abi::<Class>(result__)
         }
     }
+    pub fn MakeTypeErased(
+        &self,
+        value: i32,
+    ) -> ::windows::core::Result<::windows::core::IInspectable> {
+        let this = self;
+        unsafe {
+            let mut result__: *mut ::core::ffi::c_void = ::core::mem::zeroed();
+            (::windows::core::Interface::vtable(this).MakeTypeErased)(
+                ::core::mem::transmute_copy(this),
+                value,
+                &mut result__,
+            )
+            .from_abi::<::windows::core::IInspectable>(result__)
+        }
+    }
 }
 impl ::core::clone::Clone for Class {
     fn clone(&self) -> Self {
@@ -66,7 +81,7 @@ impl ::core::fmt::Debug for Class {
 }
 unsafe impl ::windows::core::RuntimeType for Class {
     const SIGNATURE: ::windows::core::ConstBuffer = ::windows::core::ConstBuffer::from_slice(
-        b"rc(Component.Class;{7285b810-864f-5262-894c-eec6a8898c40})",
+        b"rc(Component.Class;{86104948-2a35-51f1-a53c-0201d700f4ee})",
     );
     type DefaultType = ::core::option::Option<Self>;
     fn from_default(from: &Self::DefaultType) -> ::windows::core::Result<Self> {
@@ -128,7 +143,7 @@ pub struct IClass(::windows::core::IUnknown);
 unsafe impl ::windows::core::Interface for IClass {
     type Vtable = IClass_Vtbl;
     const IID: ::windows::core::GUID =
-        ::windows::core::GUID::from_u128(0x7285b810_864f_5262_894c_eec6a8898c40);
+        ::windows::core::GUID::from_u128(0x86104948_2a35_51f1_a53c_0201d700f4ee);
 }
 #[repr(C)]
 #[doc(hidden)]
@@ -147,11 +162,17 @@ pub struct IClass_Vtbl {
         value: i32,
         result__: *mut ::windows::core::RawPtr,
     ) -> ::windows::core::HRESULT,
+    pub MakeTypeErased: unsafe extern "system" fn(
+        this: *mut ::core::ffi::c_void,
+        value: i32,
+        result__: *mut *mut ::core::ffi::c_void,
+    ) -> ::windows::core::HRESULT,
 }
 pub trait IClass_Impl: Sized {
     fn Property(&self) -> ::windows::core::Result<i32>;
     fn SetProperty(&self, value: i32) -> ::windows::core::Result<()>;
     fn Make(&self, value: i32) -> ::windows::core::Result<Class>;
+    fn MakeTypeErased(&self, value: i32) -> ::windows::core::Result<::windows::core::IInspectable>;
 }
 impl ::windows::core::RuntimeName for IClass {
     const NAME: &'static str = "Component.IClass";
@@ -213,11 +234,32 @@ impl IClass_Vtbl {
                 ::core::result::Result::Err(err) => err.into(),
             }
         }
+        unsafe extern "system" fn MakeTypeErased<
+            Identity: ::windows::core::IUnknownImpl,
+            Impl: IClass_Impl,
+            const OFFSET: isize,
+        >(
+            this: *mut ::core::ffi::c_void,
+            value: i32,
+            result__: *mut *mut ::core::ffi::c_void,
+        ) -> ::windows::core::HRESULT {
+            let this = (this as *mut ::windows::core::RawPtr).offset(OFFSET) as *mut Identity;
+            let this = (*this).get_impl() as *mut Impl;
+            match (*this).MakeTypeErased(value) {
+                ::core::result::Result::Ok(ok__) => {
+                    *result__ = ::core::mem::transmute_copy(&ok__);
+                    ::core::mem::forget(ok__);
+                    ::windows::core::HRESULT(0)
+                }
+                ::core::result::Result::Err(err) => err.into(),
+            }
+        }
         Self {
             base__: ::windows::core::IInspectableVtbl::new::<Identity, IClass, OFFSET>(),
             Property: Property::<Identity, Impl, OFFSET>,
             SetProperty: SetProperty::<Identity, Impl, OFFSET>,
             Make: Make::<Identity, Impl, OFFSET>,
+            MakeTypeErased: MakeTypeErased::<Identity, Impl, OFFSET>,
         }
     }
     pub fn matches(iid: &windows::core::GUID) -> bool {

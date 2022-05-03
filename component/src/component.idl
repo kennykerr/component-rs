@@ -5,5 +5,6 @@ namespace Component
         Class();
         Int32 Property;
         Class Make(Int32 value);
+        Object MakeTypeErased(Int32 value);
     }
 }

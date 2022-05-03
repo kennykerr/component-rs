@@ -29,6 +29,9 @@ impl bindings::IClass_Impl for Class {
     fn Make(&self, value :i32) -> Result<bindings::Class> {
         Ok(Class(RwLock::new(value)).into())
     }
+    fn MakeTypeErased(&self, value :i32) -> Result<IInspectable> {
+        Ok(Class(RwLock::new(value)).into())
+    }
 }
 
 #[implement(IActivationFactory)]
@@ -48,5 +51,16 @@ unsafe extern "stdcall" fn DllGetActivationFactory(
     // TODO: check class name
     let factory: IActivationFactory = ClassFactory().into();
     *result = transmute(factory);
+    S_OK
+}
+
+#[no_mangle]
+unsafe extern "stdcall" fn GetClassInstance(
+    value: i32,
+    result: *mut *mut std::ffi::c_void,
+) -> HRESULT {
+
+    let instance :bindings::Class = Class(RwLock::new(value)).into();
+    *result = transmute(instance);
     S_OK
 }

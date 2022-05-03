@@ -26,6 +26,9 @@ impl bindings::IClass_Impl for Class {
         *writer = value;
         Ok(())
     }
+    fn Make(&self, value :i32) -> Result<bindings::Class> {
+        Ok(Class(RwLock::new(value)).into())
+    }
 }
 
 #[implement(IActivationFactory)]

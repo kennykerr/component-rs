@@ -35,6 +35,18 @@ impl Class {
             .ok()
         }
     }
+    pub fn Make(&self, value: i32) -> ::windows::core::Result<Class> {
+        let this = self;
+        unsafe {
+            let mut result__: ::windows::core::RawPtr = ::core::mem::zeroed();
+            (::windows::core::Interface::vtable(this).Make)(
+                ::core::mem::transmute_copy(this),
+                value,
+                &mut result__,
+            )
+            .from_abi::<Class>(result__)
+        }
+    }
 }
 impl ::core::clone::Clone for Class {
     fn clone(&self) -> Self {
@@ -54,7 +66,7 @@ impl ::core::fmt::Debug for Class {
 }
 unsafe impl ::windows::core::RuntimeType for Class {
     const SIGNATURE: ::windows::core::ConstBuffer = ::windows::core::ConstBuffer::from_slice(
-        b"rc(Component.Class;{855d6958-119e-585e-886b-6bbf722d950f})",
+        b"rc(Component.Class;{7285b810-864f-5262-894c-eec6a8898c40})",
     );
     type DefaultType = ::core::option::Option<Self>;
     fn from_default(from: &Self::DefaultType) -> ::windows::core::Result<Self> {
@@ -116,7 +128,7 @@ pub struct IClass(::windows::core::IUnknown);
 unsafe impl ::windows::core::Interface for IClass {
     type Vtable = IClass_Vtbl;
     const IID: ::windows::core::GUID =
-        ::windows::core::GUID::from_u128(0x855d6958_119e_585e_886b_6bbf722d950f);
+        ::windows::core::GUID::from_u128(0x7285b810_864f_5262_894c_eec6a8898c40);
 }
 #[repr(C)]
 #[doc(hidden)]
@@ -130,10 +142,16 @@ pub struct IClass_Vtbl {
         this: *mut ::core::ffi::c_void,
         value: i32,
     ) -> ::windows::core::HRESULT,
+    pub Make: unsafe extern "system" fn(
+        this: *mut ::core::ffi::c_void,
+        value: i32,
+        result__: *mut ::windows::core::RawPtr,
+    ) -> ::windows::core::HRESULT,
 }
 pub trait IClass_Impl: Sized {
     fn Property(&self) -> ::windows::core::Result<i32>;
     fn SetProperty(&self, value: i32) -> ::windows::core::Result<()>;
+    fn Make(&self, value: i32) -> ::windows::core::Result<Class>;
 }
 impl ::windows::core::RuntimeName for IClass {
     const NAME: &'static str = "Component.IClass";
@@ -175,10 +193,31 @@ impl IClass_Vtbl {
             let this = (*this).get_impl() as *mut Impl;
             (*this).SetProperty(value).into()
         }
+        unsafe extern "system" fn Make<
+            Identity: ::windows::core::IUnknownImpl,
+            Impl: IClass_Impl,
+            const OFFSET: isize,
+        >(
+            this: *mut ::core::ffi::c_void,
+            value: i32,
+            result__: *mut ::windows::core::RawPtr,
+        ) -> ::windows::core::HRESULT {
+            let this = (this as *mut ::windows::core::RawPtr).offset(OFFSET) as *mut Identity;
+            let this = (*this).get_impl() as *mut Impl;
+            match (*this).Make(value) {
+                ::core::result::Result::Ok(ok__) => {
+                    *result__ = ::core::mem::transmute_copy(&ok__);
+                    ::core::mem::forget(ok__);
+                    ::windows::core::HRESULT(0)
+                }
+                ::core::result::Result::Err(err) => err.into(),
+            }
+        }
         Self {
             base__: ::windows::core::IInspectableVtbl::new::<Identity, IClass, OFFSET>(),
             Property: Property::<Identity, Impl, OFFSET>,
             SetProperty: SetProperty::<Identity, Impl, OFFSET>,
+            Make: Make::<Identity, Impl, OFFSET>,
         }
     }
     pub fn matches(iid: &windows::core::GUID) -> bool {

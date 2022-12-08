@@ -7,12 +7,13 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies.windows]
-version = "0.36"
+version = "0.43"
 features = [
     "implement",
     "Win32_Foundation",
     "Win32_System_WinRT",
 ]
 
-[build-dependencies.windows-bindgen]
-version = "0.36"
+[build-dependencies]
+windows-bindgen = "0.43"
+windows-metadata = "0.43"

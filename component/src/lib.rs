@@ -1,11 +1,6 @@
 #![allow(
     non_snake_case,
-    non_upper_case_globals,
     non_camel_case_types,
-    clashing_extern_declarations,
-    unused_variables,
-    dead_code,
-    clippy::all
 )]
 
 mod bindings;
@@ -26,10 +21,10 @@ impl bindings::IClass_Impl for Class {
         *writer = value;
         Ok(())
     }
-    fn Make(&self, value :i32) -> Result<bindings::Class> {
+    fn Make(&self, value: i32) -> Result<bindings::Class> {
         Ok(Class(RwLock::new(value)).into())
     }
-    fn MakeTypeErased(&self, value :i32) -> Result<IInspectable> {
+    fn MakeTypeErased(&self, value: i32) -> Result<IInspectable> {
         Ok(Class(RwLock::new(value)).into())
     }
 }
@@ -59,8 +54,7 @@ unsafe extern "stdcall" fn GetClassInstance(
     value: i32,
     result: *mut *mut std::ffi::c_void,
 ) -> HRESULT {
-
-    let instance :bindings::Class = Class(RwLock::new(value)).into();
+    let instance: bindings::Class = Class(RwLock::new(value)).into();
     *result = transmute(instance);
     S_OK
 }

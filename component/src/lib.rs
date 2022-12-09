@@ -1,7 +1,4 @@
-#![allow(
-    non_snake_case,
-    non_camel_case_types,
-)]
+#![allow(non_snake_case, non_camel_case_types)]
 
 mod bindings;
 use std::mem::*;
@@ -29,12 +26,18 @@ impl bindings::IClass_Impl for Class {
     }
 }
 
-#[implement(IActivationFactory)]
+#[implement(IActivationFactory, bindings::IClassFactory)]
 struct ClassFactory();
 
 impl IActivationFactory_Impl for ClassFactory {
     fn ActivateInstance(&self) -> Result<IInspectable> {
         Ok(Class(RwLock::new(0)).into())
+    }
+}
+
+impl bindings::IClassFactory_Impl for ClassFactory {
+    fn CreateInstance(&self, property: i32) -> Result<bindings::Class> {
+        Ok(Class(RwLock::new(property)).into())
     }
 }
 

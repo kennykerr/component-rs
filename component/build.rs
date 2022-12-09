@@ -3,6 +3,8 @@ use std::process::*;
 
 fn main() -> std::io::Result<()> {
     println!("cargo:rerun-if-changed=src/component.idl");
+    let _ = std::fs::remove_file("src/bindings.rs");
+    let _ = std::fs::remove_file("component.winmd");
 
     Command::new("midlrt.exe")
         .arg("/winrt")

@@ -15,6 +15,9 @@ int main()
     Class e = c.MakeTypeErased(789).as<Class>();
     assert(e.Property() == 789);
 
+    Class g(321);
+    assert(g.Property() == 321);
+
     HMODULE mod = LoadLibraryExW(L"component.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
     assert(mod != nullptr);
     if (mod != nullptr)

@@ -31,6 +31,26 @@ pub struct IClass_Vtbl {
         result__: *mut *mut ::core::ffi::c_void,
     ) -> ::windows::core::HRESULT,
 }
+#[doc(hidden)]
+#[repr(transparent)]
+pub struct IClassFactory(::windows::core::IUnknown);
+unsafe impl ::windows::core::Vtable for IClassFactory {
+    type Vtable = IClassFactory_Vtbl;
+}
+unsafe impl ::windows::core::Interface for IClassFactory {
+    const IID: ::windows::core::GUID =
+        ::windows::core::GUID::from_u128(0x17021f4e_76fe_5914_91b2_5d71075c7de6);
+}
+#[repr(C)]
+#[doc(hidden)]
+pub struct IClassFactory_Vtbl {
+    pub base__: ::windows::core::IInspectable_Vtbl,
+    pub CreateInstance: unsafe extern "system" fn(
+        this: *mut ::core::ffi::c_void,
+        property: i32,
+        result__: *mut *mut ::core::ffi::c_void,
+    ) -> ::windows::core::HRESULT,
+}
 #[repr(transparent)]
 pub struct Class(::windows::core::IUnknown);
 impl Class {
@@ -94,6 +114,24 @@ impl Class {
             )
             .from_abi::<::windows::core::IInspectable>(result__)
         }
+    }
+    pub fn CreateInstance(property: i32) -> ::windows::core::Result<Class> {
+        Self::IClassFactory(|this| unsafe {
+            let mut result__ = ::core::mem::MaybeUninit::zeroed();
+            (::windows::core::Vtable::vtable(this).CreateInstance)(
+                ::windows::core::Vtable::as_raw(this),
+                property,
+                result__.as_mut_ptr(),
+            )
+            .from_abi::<Class>(result__)
+        })
+    }
+    pub fn IClassFactory<R, F: FnOnce(&IClassFactory) -> ::windows::core::Result<R>>(
+        callback: F,
+    ) -> ::windows::core::Result<R> {
+        static SHARED: ::windows::core::FactoryCache<Class, IClassFactory> =
+            ::windows::core::FactoryCache::new();
+        SHARED.call(callback)
     }
 }
 impl ::core::clone::Clone for Class {
@@ -233,5 +271,46 @@ impl IClass_Vtbl {
     }
     pub fn matches(iid: &windows::core::GUID) -> bool {
         iid == &<IClass as ::windows::core::Interface>::IID
+    }
+}
+pub trait IClassFactory_Impl: Sized {
+    fn CreateInstance(&self, property: i32) -> ::windows::core::Result<Class>;
+}
+impl ::windows::core::RuntimeName for IClassFactory {
+    const NAME: &'static str = "Component.IClassFactory";
+}
+impl IClassFactory_Vtbl {
+    pub const fn new<
+        Identity: ::windows::core::IUnknownImpl<Impl = Impl>,
+        Impl: IClassFactory_Impl,
+        const OFFSET: isize,
+    >() -> IClassFactory_Vtbl {
+        unsafe extern "system" fn CreateInstance<
+            Identity: ::windows::core::IUnknownImpl<Impl = Impl>,
+            Impl: IClassFactory_Impl,
+            const OFFSET: isize,
+        >(
+            this: *mut ::core::ffi::c_void,
+            property: i32,
+            result__: *mut *mut ::core::ffi::c_void,
+        ) -> ::windows::core::HRESULT {
+            let this = (this as *const *const ()).offset(OFFSET) as *const Identity;
+            let this = (*this).get_impl();
+            match this.CreateInstance(property) {
+                ::core::result::Result::Ok(ok__) => {
+                    ::core::ptr::write(result__, ::core::mem::transmute_copy(&ok__));
+                    ::core::mem::forget(ok__);
+                    ::windows::core::HRESULT(0)
+                }
+                ::core::result::Result::Err(err) => err.into(),
+            }
+        }
+        Self {
+            base__: ::windows::core::IInspectable_Vtbl::new::<Identity, IClassFactory, OFFSET>(),
+            CreateInstance: CreateInstance::<Identity, Impl, OFFSET>,
+        }
+    }
+    pub fn matches(iid: &windows::core::GUID) -> bool {
+        iid == &<IClassFactory as ::windows::core::Interface>::IID
     }
 }
